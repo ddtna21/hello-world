@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class MonsterPool : MonoBehaviour
 {
-    public GameObject MonstersPrefab;                                    //The column game object.
-    public int monstersPoolSize = 5;                                    //How many columns to keep on standby.
-    public float spawnRate = 2f;                                    //How quickly columns spawn.
-    public float monstersMin = -1f;                                    //Minimum y value of the column position.
-    public float monstersMax = 3.5f;                                    //Maximum y value of the column position.
+    public GameObject CoinsPrefab;                                    
+    public int coinsPoolSize = 5;                                   
+    public float spawnRate = 2f;                                    
+    public float coinsMin = -1f;                                    
+    public float coinsMax = 3.5f;                                   
 
-    private GameObject[] monsters;                                    //Collection of pooled columns.
-    private int currentMonsters = 0;                                    //Index of the current column in the collection.
+    private GameObject[] coins;                                    
+    private int currentCoins = 0;                                    
 
-    private Vector2 objectPoolPosition = new Vector2(-10, -15);        //A holding position for our unused columns offscreen.
+    private Vector2 objectPoolPosition = new Vector2(-10, -15);        
     private float spawnXPosition = 4f;
 
     private float timeSinceLastSpawned;
@@ -23,19 +23,19 @@ public class MonsterPool : MonoBehaviour
     {
         timeSinceLastSpawned = 0f;
 
-        //Initialize the columns collection.
-        monsters = new GameObject[monstersPoolSize];
+        
+        coins = new GameObject[coinsPoolSize];
         //Loop through the collection... 
-        for (int i = 0; i < monstersPoolSize; i++)
+        for (int i = 0; i < coinsPoolSize; i++)
         {
-            //...and create the individual columns.
-            monsters[i] = (GameObject)Instantiate(MonstersPrefab, objectPoolPosition, Quaternion.identity);
+            
+            coins[i] = (GameObject)Instantiate(CoinsPrefab, objectPoolPosition, Quaternion.identity);
         }
-        InvokeRepeating("MonsterPool", 2.0f, 0.3f);
+        InvokeRepeating("CoinPool", 2.0f, 0.3f);
     }
     
 
-    //This spawns columns as long as the game is not over.
+    .
     void Update()
     {
         timeSinceLastSpawned += Time.deltaTime;
@@ -44,18 +44,18 @@ public class MonsterPool : MonoBehaviour
         {
             timeSinceLastSpawned = 0f;
 
-            //Set a random y position for the column
-            float spawnYPosition = Random.Range(monstersMin, monstersMax);
+            
+            float spawnYPosition = Random.Range(coinsMin, coinsMax);
 
-            //...then set the current column to that position.
-            monsters[currentMonsters].transform.position = new Vector2(spawnXPosition, spawnYPosition);
+         
+            coins[currentCoins].transform.position = new Vector2(spawnXPosition, spawnYPosition);
 
-            //Increase the value of currentColumn. If the new size is too big, set it back to zero
-            currentMonsters++;
+            
+            currentCoins++;
 
-            if (currentMonsters >= monstersPoolSize)
+            if (currentCoins >= coinsPoolSize)
             {
-                currentMonsters = 0;
+                currentCoins = 0;
                 Destroy(gameObject);
             }
         }
